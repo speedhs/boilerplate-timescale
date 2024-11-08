@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  timescaledb:
+    build: .
+    container_name: timescaledb
+    environment:
+      - POSTGRES_DB=brownian
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    restart: unless-stopped
+
+volumes:
+  timescale_data:
